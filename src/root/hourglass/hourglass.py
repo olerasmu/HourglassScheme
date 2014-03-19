@@ -8,6 +8,7 @@ import binascii
 from _elementtree import Element
 import uu
 from base64 import encode
+import math
 
 class Hourglass(object):
     
@@ -16,6 +17,12 @@ class Hourglass(object):
         self.filepath = filepath
         self.f = open(filepath, 'rb')
         print filepath
+    
+    def computeS(self, a, n, l, t, e):
+        
+        s1 = math.pow(a, 1/t)*n*l*(1-e)
+        s2 = n*l*(1-e)+(math.log(math.pow(a, 1/t), 2))
+        return [s1, s2]
         
     def getSize(self): 
         self.f.seek(0, os.SEEK_END)
@@ -26,7 +33,7 @@ class Hourglass(object):
         return size
     
     def wirteByteByByteToNewFile(self):
-        newfile2 = open('C:\\Users\\olerasmu\\Documents\\newfile.jpg', 'w+b')
+        newfile2 = open('C:\\Users\\olerasmu\\Documents\\newfile.txt', 'w+b')
         
         fileTab = []
         bitTab = []
@@ -36,11 +43,7 @@ class Hourglass(object):
             while byte:
                 fileTab.append(byte)
                 byte = newfile1.read(1)
-                
-
-        
-            
-        
+       
         #write byte for byte to new file
         for byte in fileTab:
            # byte += "\n"
@@ -62,7 +65,9 @@ class Hourglass(object):
  
 
     
-hg = Hourglass(filepath="C:\\Users\\olerasmu\\Downloads\\koala.jpg")    
+hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
 
-size = hg.getSize()
-hg.wirteByteByByteToNewFile()
+print hg.computeS(0.99, 512, 64, 111, 0.05)
+
+#size = hg.getSize()
+#hg.wirteByteByByteToNewFile()
