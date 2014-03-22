@@ -18,10 +18,18 @@ class Hourglass(object):
         self.f = open(filepath, 'rb')
         print filepath
     
-    def computeS(self, a, n, l, t, e):
-        
+    def computeButterflyS(self, filename, a, n, l, t, e):
+        file_size_bits = n*l
         s1 = math.pow(a, 1/t)*n*l*(1-e)
         s2 = n*l*(1-e)+(math.log(math.pow(a, 1/t), 2))
+        
+        overhead_relationship_s1 = s1/file_size_bits
+        overhead_relationship_s2 = s2/file_size_bits
+        data_strings = "Inputs:", str(a), str(n), str(l), str(t), str(e), "File size in bits:", str(file_size_bits), "Results:", str(s1), str(s2), "Overhead relationship:", str(overhead_relationship_s1), str(overhead_relationship_s2), "\n"
+        data_strings = ';'.join(data_strings)
+        print data_strings
+        with open(filename, 'a') as data_file:
+            data_file.write(data_strings)
         return [s1, s2]
         
     def getSize(self): 
@@ -63,11 +71,39 @@ class Hourglass(object):
             #print "This is element: ", element
 
  
-
-    
+    #===========================================================================
+    # def testDiv(self):
+    #     s1 = "Started his hear"
+    #     s2 = "ted any civilly."
+    #     
+    #     var  = "".join(i for j in zip(s1,s2) for i in j)
+    #     print var
+    #     
+    #     block_one = var[::2]
+    #     block_two = var[1::2]
+    #     
+    #     print block_one, " ", block_two 
+    #===========================================================================
+        
+        
 hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
 
-print hg.computeS(0.99, 512, 64, 111, 0.05)
+#===============================================================================
+# hg.testDiv()
+#===============================================================================
+
+#Theorem 1: computeS(a, n, l, t, e)
+
+for i in range(1,100):
+    print i
+    a = float(i)/100
+    print a
+    temp = hg.computeButterflyS('butterflyfile.txt', a, 1, 128, 1, 0.05)
+    print temp
+    
+#===============================================================================
+# temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
+#===============================================================================
 
 #size = hg.getSize()
 #hg.wirteByteByByteToNewFile()
