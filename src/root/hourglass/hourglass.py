@@ -18,6 +18,7 @@ class Hourglass(object):
         self.f = open(filepath, 'rb')
         print filepath
     
+    #Computes the butterfly cost by extra storage for cheating server    
     def computeButterflyS(self, filename, a, n, l, t, e):
         file_size_bits = n*l
         s1 = math.pow(a, 1/t)*n*l*(1-e)
@@ -31,6 +32,19 @@ class Hourglass(object):
         with open(filename, 'a') as data_file:
             data_file.write(data_strings)
         return [s1, s2]
+    
+    #Computes the permutation cost by extra storage for cheating server
+    def computePermutationS(self, filename, a, n, m, l, t_s, t_r, T):
+        print a, n, m, l, t_s, t_r, T 
+        k1 = math.floor(t_s/t_r)
+        print k1
+        k2 = 1+math.floor(n/(2*math.pow(m, 2)+(4l/3)))
+        print k2
+        k = min(k1, k2)
+        print k
+        s = (2*a - 1)*n*l*(m-(T/(k*t_r))/(m-1))
+        print s
+        return s
         
     def getSize(self): 
         self.f.seek(0, os.SEEK_END)
@@ -96,10 +110,14 @@ hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
 
 for i in range(1,100):
     print i
-    a = float(i)/100
+    a = i
     print a
-    temp = hg.computeButterflyS('butterflyfile.txt', a, 1, 128, 1, 0.05)
+    temp = hg.computeButterflyS('butterflyfile_var_n.txt', 0.99, 500000, 128, 1, 0.05)
     print temp
+
+
+#Theorem 3: computePermutationS(filename, a, n, m, l, t_s, t_r, T)
+print hg.computePermutationS('permuattion_s.txt', 0.99, math.pow(2, 21), math.pow(2, 9), 32000, 0.006, 0.0003215, 0.006)
     
 #===============================================================================
 # temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
