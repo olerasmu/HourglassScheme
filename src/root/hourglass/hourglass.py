@@ -59,7 +59,9 @@ class Hourglass(object):
         data_strings = "Inputs:", str(a), str(n), str(m), str(l), str(t_s), str(t_r), "File size in bits:", str(file_size_bits), "Results:", str(s), "Overhead relationship:", str(extra_storage_relationship), "\n"
         data_strings = ';'.join(data_strings)
         
-        
+        print "File size in bits: ", file_size_bits
+        print "Overhead data in bilts: ", s
+        print "Overhead relationship (s/file size): ", extra_storage_relationship
         with open(filename, 'a') as newfile:
             newfile.write(data_strings)
         return s
@@ -138,13 +140,10 @@ hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
 
 #Theorem 3: computePermutationS(filename, a, n, m, l, t_s, t_r, T)
 
-file_size = 4*8*1024*math.pow(2, 21)
-print file_size
 for i in range(1,100):
     a = float(i)/100
     s = hg.computePermutationS('permuattion_s.txt', a, math.pow(2, 21), math.pow(2, 9), 32768, 0.006, 0.00003215, 0.006)
     print a
-    print "Overhead: ", s/file_size
 #===============================================================================
 # temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
 #===============================================================================
