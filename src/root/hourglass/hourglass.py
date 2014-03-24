@@ -16,7 +16,7 @@ class Hourglass(object):
     def __init__(self, filepath=None, size=0):
         self.filepath = filepath
         self.f = open(filepath, 'rb')
-        print filepath
+        print (filepath)
     
     #Computes the butterfly cost by extra storage for cheating server    
     def computeButterflyS(self, filename, a, n, l, t, e):
@@ -28,22 +28,22 @@ class Hourglass(object):
         overhead_relationship_s2 = s2/file_size_bits
         data_strings = "Inputs:", str(a), str(n), str(l), str(t), str(e), "File size in bits:", str(file_size_bits), "Results:", str(s1), str(s2), "Overhead relationship:", str(overhead_relationship_s1), str(overhead_relationship_s2), "\n"
         data_strings = ';'.join(data_strings)
-        print data_strings
+        print (data_strings)
         with open(filename, 'a') as data_file:
             data_file.write(data_strings)
         return [s1, s2]
     
     #Computes the permutation cost by extra storage for cheating server
     def computePermutationS(self, filename, a, n, m, l, t_s, t_r, T):
-        print a, n, m, l, t_s, t_r, T 
+        print (a, n, m, l, t_s, t_r, T) 
         k1 = math.floor(t_s/t_r)
-        print k1
-        k2 = 1+math.floor(n/(2*math.pow(m, 2)+(4l/3)))
-        print k2
+        print (k1)
+        k2 = 1+math.floor(n/(2*math.pow(m, 2)+(4*l/3)))
+        print (k2)
         k = min(k1, k2)
-        print k
+        print (k)
         s = (2*a - 1)*n*l*(m-(T/(k*t_r))/(m-1))
-        print s
+        print (s)
         return s
         
     def getSize(self): 
@@ -51,7 +51,7 @@ class Hourglass(object):
         size = self.f.tell()
         self.size = size
         self.f.seek(0, os.SEEK_SET)
-        print "The file size in bytes is: ", size
+        print ("The file size in bytes is: ", size)
         return size
     
     def wirteByteByByteToNewFile(self):
@@ -69,7 +69,7 @@ class Hourglass(object):
         #write byte for byte to new file
         for byte in fileTab:
            # byte += "\n"
-            print byte
+            print (byte)
             newfile2.write(byte)
         
         #=======================================================================
@@ -100,7 +100,7 @@ class Hourglass(object):
     #===========================================================================
         
         
-hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
+hg = Hourglass(filepath="test.txt")
 
 #===============================================================================
 # hg.testDiv()
@@ -109,15 +109,15 @@ hg = Hourglass(filepath="C:\\Users\\olerasmu\\Documents\\test.txt")
 #Theorem 1: computeS(a, n, l, t, e)
 
 for i in range(1,100):
-    print i
+    print (i)
     a = i
-    print a
+    print (a)
     temp = hg.computeButterflyS('butterflyfile_var_n.txt', 0.99, 500000, 128, 1, 0.05)
-    print temp
+    print (temp)
 
 
 #Theorem 3: computePermutationS(filename, a, n, m, l, t_s, t_r, T)
-print hg.computePermutationS('permuattion_s.txt', 0.99, math.pow(2, 21), math.pow(2, 9), 32000, 0.006, 0.0003215, 0.006)
+print (hg.computePermutationS('permuattion_s.txt', 0.99, math.pow(2, 21), math.pow(2, 9), 32000, 0.006, 0.0003215, 0.006))
     
 #===============================================================================
 # temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
