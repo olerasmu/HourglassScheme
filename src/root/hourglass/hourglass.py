@@ -35,17 +35,47 @@ class Hourglass(object):
     
     #Computes the permutation cost by extra storage for cheating server
     def computePermutationS(self, filename, a, n, m, l, t_s, t_r, T):
+
         print (a, n, m, l, t_s, t_r, T) 
+
+        file_size_bits = n*l
+
         k1 = math.floor(t_s/t_r)
         print (k1)
         k2 = 1+math.floor(n/(2*math.pow(m, 2)+(4*l/3)))
         print (k2)
         k = min(k1, k2)
+
         print (k)
         s = (2*a - 1)*n*l*(m-(T/(k*t_r))/(m-1))
         print (s)
         return s
+
+        print "This is k: ", k
         
+        A = (2*a - 1)*n*l
+        B = m-(T/(k*t_r))
+        C = (m-1)
+        print A,B,C
+        s = A*(B/C)
+
+        #=======================================================================
+        # s = (2*a - 1)*n*l*((m-(T/(k*t_r)))/(m-1))
+        #=======================================================================
+        
+        extra_storage_relationship  = s/file_size_bits
+
+        
+        data_strings = "Inputs:", str(a), str(n), str(m), str(l), str(t_s), str(t_r), "File size in bits:", str(file_size_bits), "Results:", str(s), "Overhead relationship:", str(extra_storage_relationship), "\n"
+        data_strings = ';'.join(data_strings)
+        
+        print "File size in bits: ", file_size_bits
+        print "Overhead data in bilts: ", s
+        print "Overhead relationship (s/file size): ", extra_storage_relationship
+        with open(filename, 'a') as newfile:
+            newfile.write(data_strings)
+        return s
+
     def getSize(self): 
         self.f.seek(0, os.SEEK_END)
         size = self.f.tell()
@@ -108,17 +138,24 @@ hg = Hourglass(filepath="test.txt")
 
 #Theorem 1: computeS(a, n, l, t, e)
 
-for i in range(1,100):
-    print (i)
-    a = i
-    print (a)
-    temp = hg.computeButterflyS('butterflyfile_var_n.txt', 0.99, 500000, 128, 1, 0.05)
-    print (temp)
+
+#===============================================================================
+# for i in range(1,100):
+#     print i
+#     a = i
+#     print a
+#     temp = hg.computeButterflyS('butterflyfile_var_n.txt', 0.99, 500000, 128, 1, 0.05)
+#     print temp
+#===============================================================================
 
 
 #Theorem 3: computePermutationS(filename, a, n, m, l, t_s, t_r, T)
-print (hg.computePermutationS('permuattion_s.txt', 0.99, math.pow(2, 21), math.pow(2, 9), 32000, 0.006, 0.0003215, 0.006))
-    
+
+for i in range(1,100):
+    a = float(i)/100
+    s = hg.computePermutationS('permuattion_s.txt', a, math.pow(2, 21), math.pow(2, 9), 32768, 0.006, 0.00003215, 0.006)
+    print a
+
 #===============================================================================
 # temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
 #===============================================================================
