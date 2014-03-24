@@ -47,9 +47,6 @@ class Hourglass(object):
         k = min(k1, k2)
 
         print (k)
-        s = (2*a - 1)*n*l*(m-(T/(k*t_r))/(m-1))
-        print (s)
-        return s
 
         print ("This is k: ", k)
         
