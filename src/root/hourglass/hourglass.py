@@ -51,12 +51,12 @@ class Hourglass(object):
         print (s)
         return s
 
-        print "This is k: ", k
+        print ("This is k: ", k)
         
         A = (2*a - 1)*n*l
         B = m-(T/(k*t_r))
         C = (m-1)
-        print A,B,C
+        print (A,B,C)
         s = A*(B/C)
 
         #=======================================================================
@@ -69,9 +69,9 @@ class Hourglass(object):
         data_strings = "Inputs:", str(a), str(n), str(m), str(l), str(t_s), str(t_r), "File size in bits:", str(file_size_bits), "Results:", str(s), "Overhead relationship:", str(extra_storage_relationship), "\n"
         data_strings = ';'.join(data_strings)
         
-        print "File size in bits: ", file_size_bits
-        print "Overhead data in bilts: ", s
-        print "Overhead relationship (s/file size): ", extra_storage_relationship
+        print ("File size in bits: ", file_size_bits)
+        print ("Overhead data in bilts: ", s)
+        print ("Overhead relationship (s/file size): ", extra_storage_relationship)
         with open(filename, 'a') as newfile:
             newfile.write(data_strings)
         return s
@@ -154,7 +154,7 @@ hg = Hourglass(filepath="test.txt")
 for i in range(1,100):
     a = float(i)/100
     s = hg.computePermutationS('permuattion_s.txt', a, math.pow(2, 21), math.pow(2, 9), 32768, 0.006, 0.00003215, 0.006)
-    print a
+    print (a)
 
 #===============================================================================
 # temp = hg.computeButterflyS('butterflyfile2.txt', 0.99, 1, 128, 1, 0.05)
